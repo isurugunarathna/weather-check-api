@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+  <title>Weather API</title>
+  <!--<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorgin="anonymous"></script>-->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+</head>
+
+<body style="background-image: url(light.jpg); background-size: auto; background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+
+  <div class="position-absolute top-0 start-50 translate-middle-x" style="background-color:   #ccccff; box-shadow: 10px 10px 5px grey">
+  	<br>
+  	<br>
+    <!--<div>
+      <label for="cityname" class="form-label">City Name</label>
+      <input id="city" class="form-control">
+    </div>-->
+    <div>
+    <h1>Check the Current Weather Using Latitude and Logtitude</h1>
+    </div>
+    <div>
+      <label  class="form-label">Latitude</label>
+      <input id="latitude" class="form-control">
+    </div>
+    <div>
+      <label  class="form-label">Longtitude</label>
+      <input id="longtitude" class="form-control">
+    </div>
+    <div></div>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <button id="getWeatherForecast" type="button" class="btn btn-primary">Get Weather Forecast</button>
+    </div>
+    <br><br>
+    
+    <div  id="showWeatherForecast" style="background-color: #99ffff;"></div>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#getWeatherForecast").click(function() {
+       // var city = $('#city').val();
+        var longtitude = $('#longtitude').val();
+        var latitude = $('#latitude').val();
+        var key = '3fe5064dd30cbd66d7a1c40cdf586f65';
+
+        $.ajax({
+          url: 'http://api.openweathermap.org/data/2.5/weather',
+          dataType: 'json',
+          type: 'GET',
+          data: {
+            // q: city,
+            lat: latitude,
+            lon: longtitude,
+            appid: key,
+
+            units: 'metric'
+          },
+
+          success: function(data) {
+            var weather = '';
+            $.each(data.weather, function(index, val) {
+
+              weather += '<h1><b>' + data.name +  "</b></h1>" + '<h2>'+
+                data.main.temp + '&deg;C' + '</h2>'+'|' + val.main + " , " + val.description
+            });
+            $("#showWeatherForecast").html(weather);
+
+
+
+          }
+        });
+
+
+      });
+
+
+    });
+  </script>
+
+</body>
+
+</html>
